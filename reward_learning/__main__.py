@@ -5,16 +5,16 @@ import typer
 from rich import print
 from typer_config.decorators import dump_json_config, use_json_config
 
-from research_project import setup_experiment
+from reward_learning import setup_experiment
 
 setup_experiment()
 from eztils import datestr
 from eztils.typer import dataclass_option
 
-from research_project import LOG_DIR, version
+from reward_learning import LOG_DIR, version
 
 app = typer.Typer(
-    name="research_project",
+    name="reward_learning",
     help="project_tag",
     add_completion=False,
 )
@@ -45,7 +45,7 @@ def main(
     """Print a greeting with a giving name."""
     conf: Config = conf  # for type hinting
 
-    print(f"[bold green]Welcome to research_project v{version}[/]")
+    print(f"[bold green]Welcome to reward_learning v{version}[/]")
     print(f"config {type(conf)}: {conf}")
     if wandb:
         import wandb as wb

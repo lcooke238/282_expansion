@@ -1,4 +1,4 @@
-research_project/.env
+reward_learning/.env
 runs
 
 # Created by https://www.gitignore.io/api/osx,python,pycharm,windows,visualstudio,visualstudiocode
@@ -615,5 +615,8 @@ healthchecksdb
 
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
+
+# Data folder
+data/
 
 # End of https://www.gitignore.io/api/osx,python,pycharm,windows,visualstudio,visualstudiocode
