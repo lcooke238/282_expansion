@@ -186,7 +186,6 @@ function value_iteration(
     push!(current_visitable_states, 1)
     for timestep in ProgressBar(1:horizon)
         next_visitable_states = Set{Int}()
-        println(current_visitable_states)
         for state in current_visitable_states
             for action = 1:num_actions
                 next_state = transitions[state, action] + 1
@@ -212,7 +211,7 @@ function value_iteration(
             for action = 1:num_actions
                 next_state = transitions[state, action] + 1
                 reward = rewards[state, action]
-                if timestep < horizon
+                if timestep < horizon #&& next_state != 0
                     exploration_qs[timestep, state, action] =
                         reward + exploration_values[timestep+1, next_state]
                     optimal_qs[timestep, state, action] =
@@ -862,11 +861,26 @@ rewards = Float32[0.0 0.0 0.0 0.0 0.0 0.0 ;
 0.0 0.0 0.0 0.0 0.0 0.0 ;
 0.0 0.0 0.0 0.0 0.0 0.0 ;
 0.0 0.0 0.0 0.0 0.0 0.0]
-horizon = 254
+horizon = 20
 num_states, num_actions = size(transitions)
-vi = value_iteration(
+results = value_iteration(
         transitions,
         rewards,
         horizon,
         exploration_policy = nothing,
     )
+
+println(size(results.exploration_qs))
+# display(results.exploration_qs)
+
+# Open a file for writing
+open("results.txt", "w") do file
+    # Write the results to the file
+    write(file, "Exploration Qs: $(results.exploration_qs)\n")
+    # write(file, "Exploration Values: $(results.exploration_values)\n")
+    # write(file, "Optimal Qs: $(results.optimal_qs)\n")
+    # write(file, "Optimal Values: $(results.optimal_values)\n")
+    # write(file, "Worst Qs: $(results.worst_qs)\n")
+    # write(file, "Worst Values: $(results.worst_values)\n")
+    # write(file, "Visitable States: $(results.visitable_states)\n")
+end
